@@ -1,0 +1,45 @@
+GET http://localhost:5000/notes
+
+###
+POST http://localhost:5000/notes
+Content-Type: application/json
+
+{
+    "judul" : "lalala",
+    "isi" : "daftar belanjaan: garam, sampo, facewash, indomie, tissue",
+    "penulis" : "virda"
+}
+
+###
+POST http://localhost:5000/notes
+Content-Type: application/json
+
+{
+    "judul": "Catatan Harian",
+    "isi": "Hari ini saya belajar membuat RESTful API dengan Node.js dan Express.",
+    "penulis": "Anisa"
+}
+
+###
+
+POST http://localhost:5000/notes
+Content-Type: application/json
+
+{
+    "judul": "To-Do List",
+    "isi": "1. Belajar Node.js\n2. Bikin CRUD API\n3. Testing API",
+    "penulis": "Rizky"
+}
+
+###
+PUT http://localhost:5000/notes/1
+Content-Type: application/json
+
+{
+    "judul": "Upadate lalala",
+    "isi": "daftar belanjaan: garam, sampo, facewash, indomie, tissue, sabun",
+    "penulis": "virda"
+}
+
+###
+DELETE http://localhost:5000/notes/3
