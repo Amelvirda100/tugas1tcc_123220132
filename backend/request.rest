@@ -1,0 +1,93 @@
+GET http://localhost:5000/notes
+
+
+###
+POST http://localhost:5000/notes
+Content-Type: application/json
+
+{
+  "title": "Catatan Harian",
+  "content": "Hari ini saya belajar membuat RESTful API dengan Node.js dan Express.",
+  "author": "Anisa"
+}
+
+
+
+###
+PUT http://localhost:5000/notes/6
+Content-Type: application/json
+
+{
+    "title": "Upadate lalala",
+    "content": "daftar belanjaan: garam, sampo, facewash, indomie, tissue, sabun",
+    "author": "virda"
+}
+
+
+###
+DELETE http://localhost:5000/notes/13
+
+### CRUD dengan bucket
+
+### **1. GET semua objek di bucket**
+GET http://localhost:5000/api/images
+Content-Type: application/json
+
+### **2. GET objek tertentu**
+GET http://localhost:5000/api/images/notes.png
+Content-Type: application/json
+
+### Upload Gambar ke Google Cloud Storage
+POST http://localhost:5000/api/images/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="dazai.png"
+Content-Type: image/png
+
+< ./dazai.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Upload Gambar ke Google Cloud Storage
+POST http://localhost:5000/api/images/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="amongus.png"
+Content-Type: image/png
+
+< ./amongus.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Upload Gambar ke Google Cloud Storage
+POST http://localhost:5000/api/images/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="UPN.jpg"
+Content-Type: image/jpg
+
+< ./UPN.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Upload Gambar ke Google Cloud Storage
+POST http://localhost:5000/api/images/upload
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="eren.jpg"
+Content-Type: image/jpg
+
+< ./eren.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+###get
+GET http://localhost:5000/api/images/list
+
+###PUT
+PUT http://localhost:5000/api/images/rename/1741824197807-UPN.jpg/dazai.png
+
+
+###delete
+DELETE http://localhost:5000/api/images/delete/1741824415045-dazai.png
