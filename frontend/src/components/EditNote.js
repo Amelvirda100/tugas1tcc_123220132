@@ -12,7 +12,7 @@ const EditNote = () => {
     useEffect(() => {
         const fetchNote = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/notes/${id}`);
+                const response = await axios.get(`https://tugas6-backend-171192151600.us-central1.run.app${id}`);
                 console.log(response.data);
                 setTitle(response.data.judul);
                 setContent(response.data.isi);
@@ -33,7 +33,7 @@ const EditNote = () => {
         console.log('Data yang dikirim:', updatedData);
 
         try {
-            const response = await axios.put(`http://localhost:5000/notes/${id}`, updatedData);
+            const response = await axios.put(`https://tugas6-backend-171192151600.us-central1.run.app${id}`, updatedData);
             console.log('Response sukses:', response);
             navigate('/');
         } catch (error) {
