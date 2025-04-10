@@ -11,7 +11,7 @@ const NoteList = () => {
 
     const getNotes = async () => {
         try {
-            const response = await axios.get('https://tugas6-backend-171192151600.us-central1.run.app');
+            const response = await axios.get('https://tugas6-backend-171192151600.us-central1.run.app/notes');
             console.log(response.data); // Tambahkan ini
             setNotes(response.data);
         } catch (error) {
@@ -22,7 +22,7 @@ const NoteList = () => {
 
     const deleteNote = async (id) => {
         try {
-            await axios.delete(`https://tugas6-backend-171192151600.us-central1.run.app/${id}`);
+            await axios.delete(`https://tugas6-backend-171192151600.us-central1.run.app/notes/${id}`);
             getNotes();
         } catch (error) {
             console.log(error);
