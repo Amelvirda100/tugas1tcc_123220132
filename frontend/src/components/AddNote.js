@@ -13,7 +13,7 @@ const AddNote = () => {
         const noteData = { title, content, author };
         console.log('Data yang dikirim:', noteData); // Debugging
         try {
-            await axios.post('http://localhost:5000/notes', noteData, {
+            await axios.post('https://tugas6-backend-171192151600.us-central1.run.app', noteData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
