@@ -1,0 +1,27 @@
+body {
+    background-color: #c9f1f8;
+    font-family: 'Poppins', sans-serif;
+}
+
+.table {
+    background-color: #fff1f7;
+    border-radius: 12px;
+}
+
+.button {
+    border-radius: 12px;
+}
+
+.input, .textarea {
+    border-radius: 12px;
+}
+
+.label {
+    color: #ff80ab;
+}
+
+.box {
+    background-color: #587e88;
+    border-radius: 12px;
+    padding: 2rem;
+}
