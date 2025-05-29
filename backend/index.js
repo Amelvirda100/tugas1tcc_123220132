@@ -9,7 +9,7 @@ const app = express();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["http://localhost:3000"], // <- Diganti sama alamat front-end
+    origin: ["https://g-13-450802.uc.r.appspot.com"], // <- Diganti sama alamat front-end
     credentials: true,
   })
 );
