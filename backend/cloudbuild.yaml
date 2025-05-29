@@ -17,7 +17,7 @@ steps:
     args: [
       "run",
       "deploy",
-      "backend_7",
+      "backend-7",
       "--image", "gcr.io/$PROJECT_ID/backend-7",
       "--timeout", "1000s",
       "--port", "5000",
