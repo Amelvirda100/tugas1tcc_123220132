@@ -11,4 +11,4 @@ export const authHeader = () => {
   };
 };
 
-export const BASE_URL = "http://localhost:5000";
+export const BASE_URL = "https://backend-7-171192151600.us-central1.run.app";

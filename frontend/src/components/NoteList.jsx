@@ -22,7 +22,7 @@ const NoteList = () => {
 
   const getNotes = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/notes", authHeader());
+      const response = await axios.get("https://backend-7-171192151600.us-central1.run.app/notes", authHeader());
       setNotes(response.data);
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -35,7 +35,7 @@ const NoteList = () => {
 
   const deleteNote = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/notes/${id}`, authHeader());
+      await axios.delete(`https://backend-7-171192151600.us-central1.run.app/notes/${id}`, authHeader());
       getNotes();
     } catch (error) {
       console.error(error);
@@ -45,7 +45,7 @@ const NoteList = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.delete("http://localhost:5000/logout", {
+      await axios.delete("https://backend-7-171192151600.us-central1.run.app/logout", {
         ...authHeader(),
         withCredentials: true,
       });

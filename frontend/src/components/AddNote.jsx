@@ -22,7 +22,7 @@ const AddNote = () => {
     e.preventDefault();
     try {
       await axios.post(
-        "http://localhost:5000/notes",
+        "https://backend-7-171192151600.us-central1.run.app/notes",
         { title, content, author },
         authHeader()
       );

@@ -13,7 +13,7 @@ const Login = () => {
     setMsg(""); // reset pesan error saat submit
     try {
       const res = await axios.post(
-        "http://localhost:5000/login",
+        "https://backend-7-171192151600.us-central1.run.app/login",
         { email, password },
         { withCredentials: true }
       );

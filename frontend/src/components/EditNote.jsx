@@ -22,7 +22,7 @@ const EditNote = () => {
   useEffect(() => {
     const fetchNote = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/notes/${id}`, authHeader());
+        const res = await axios.get(`https://backend-7-171192151600.us-central1.run.app/notes/${id}`, authHeader());
         console.log("Response data:", res.data); // cek apa yang sebenarnya diterima
         setTitle(res.data.judul);
         setContent(res.data.isi);
@@ -39,7 +39,7 @@ const EditNote = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:5000/notes/${id}`,
+        `https://backend-7-171192151600.us-central1.run.app/notes/${id}`,
         { title, content, author },
         authHeader()
       );
