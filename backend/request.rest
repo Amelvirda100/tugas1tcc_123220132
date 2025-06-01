@@ -1,0 +1,55 @@
+### GET Admins
+GET http://localhost:5000/get-admin
+Content-Type: application/json
+
+###
+
+### POST Admin (login atau create)
+POST http://localhost:5000/add-admin
+Content-Type: application/json
+
+{
+  "username": "virda",
+  "password": "virda123"
+}
+
+### Tes POST penyewaan berhasil
+POST http://localhost:5000/penyewaan
+Content-Type: application/json
+
+{
+  "nama": "amel",
+  "kamarId": 10
+}
+
+###
+
+### Tes GET semua penyewaan
+GET http://localhost:5000/penyewaan
+Accept: application/json
+
+###
+
+### Tes PUT update penyewaan id=1 (contoh)
+PUT http://localhost:5000/penyewaan/1
+Content-Type: application/json
+
+{
+  "nama": "Budi Updated",
+  "kamarId": 5
+}
+
+###
+
+### Tes PATCH update status sewa id=1
+PATCH http://localhost:5000/penyewaan/status/1
+Content-Type: application/json
+
+{
+  "status": "selesai"
+}
+
+###
+
+### Tes DELETE soft delete penyewaan id=1
+DELETE http://localhost:5000/penyewaan/1

@@ -1,0 +1,160 @@
+:root {
+  /* Light mode colors */
+  --bg-color: #f9fafb;
+  --text-color: #2c3e50;
+  --primary-color: #3273dc;
+  --primary-color-light: #e6f0ff;
+  --danger-color: #e74c3c;
+  --danger-color-light: #fcebea;
+  --input-border: #ccc;
+  --input-focus-border: #3273dc;
+  --box-shadow: rgba(0, 0, 0, 0.06);
+  --table-head-bg: #e8ebf0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --primary-color: #5390ff;
+    --primary-color-light: #2c3e50;
+    --danger-color: #ff6b6b;
+    --danger-color-light: #4c1f1f;
+    --input-border: #444;
+    --input-focus-border: #5390ff;
+    --box-shadow: rgba(255, 255, 255, 0.1);
+    --table-head-bg: #1e1e1e;
+  }
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.5;
+  margin: 0;
+  padding: 1rem;
+}
+
+h3.title {
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  border-left: 5px solid var(--primary-color);
+  padding-left: 0.75rem;
+}
+
+input.input,
+textarea.textarea,
+.select select {
+  width: 100%;
+  border-radius: 8px;
+  border: 1.5px solid var(--input-border);
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+  box-shadow: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input.input::placeholder,
+textarea.textarea::placeholder {
+  color: #999;
+}
+
+input.input:focus,
+textarea.textarea:focus,
+.select select:focus {
+  border-color: var(--input-focus-border);
+  box-shadow: 0 0 8px 0.15em var(--input-focus-border);
+  outline: none;
+  background-color: var(--primary-color-light);
+  color: var(--text-color);
+}
+
+.button {
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 2px 8px var(--box-shadow);
+  user-select: none;
+}
+
+.button:hover,
+.button:focus {
+  background-color: darken(var(--primary-color), 10%);
+  outline: none;
+  box-shadow: 0 0 12px var(--primary-color);
+}
+
+/* Light variant buttons */
+.button.is-primary.is-light {
+  background-color: var(--primary-color-light);
+  color: var(--primary-color);
+  box-shadow: none;
+}
+
+.button.is-primary.is-light:hover {
+  background-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 2px 10px var(--primary-color);
+}
+
+.button.is-danger.is-light {
+  background-color: var(--danger-color-light);
+  color: var(--danger-color);
+  box-shadow: none;
+}
+
+.button.is-danger.is-light:hover {
+  background-color: var(--danger-color);
+  color: white;
+  box-shadow: 0 2px 10px var(--danger-color);
+}
+
+.box {
+  background-color: var(--bg-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--box-shadow);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.table thead th {
+  background-color: var(--table-head-bg);
+  font-weight: 600;
+  color: var(--text-color);
+  padding: 0.75rem;
+  border-bottom: 2px solid var(--input-border);
+  text-align: left;
+}
+
+.table td, .table th {
+  vertical-align: middle;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--input-border);
+  color: var(--text-color);
+}
+
+.mt-5 {
+  margin-top: 3rem;
+}
+
+.button.is-success {
+  background-color: #48c774 !important;
+  color: white !important;
+}
+
+.button.is-success:hover {
+  background-color: #3ec46d !important;
+  color: white !important;
+}
+
