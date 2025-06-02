@@ -1,0 +1,166 @@
+.nav1 {
+    margin-left: 10px;
+    color: white;
+    font-size: larger;
+    margin-top: 10px;
+}
+
+.sidebar {
+    height: 100%;
+    top: 0;
+    width: 270px;
+    background-color: #52796F;
+    text-align: center;
+    position: fixed;
+    overflow-x: hidden;
+    padding-top: 60px;
+    left: -270px; /* Sembunyikan sidebar */
+    transition: left 0.3s ease-in-out;
+    z-index: 9999;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+#sidebarToggleBtn {
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    transition: left 0.3s ease-in-out;
+}
+
+#sidebarToggleBtn.active {
+    left: 280px;
+}
+
+.container-fluid {
+    transition: width 0.3s ease-in-out, margin-left 0.3s ease-in-out;
+    width: 100%;
+    margin-left: 10px;
+    padding-top: 70px;
+}
+
+.container-fluid.active {
+    width: 82.5%;
+    margin-left: 270px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    line-height: 60px;
+    color: white;
+    font-size: 16px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar ul li:hover,
+.sidebar ul li.active-menu {
+    background-color: #385b52;
+}
+
+.sb-topnav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    z-index: 1;
+}
+
+.navbar-left {
+    flex: 1;
+}
+
+.navbar-right {
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-center {
+    color: white;
+    display: flex;
+    padding-right: 20px;
+}
+
+.noti-box {
+    min-height: 100px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgb(0 0 0 / 0.1);
+    color: white;
+}
+
+.icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    width: 70px;
+    height: 70px;
+    font-size: 40px;
+    border-radius: 50%;
+}
+
+.bg-color-green {
+    background-color: #00CE6F;
+}
+
+.bg-color-blue {
+    background-color: #A95DF0;
+}
+
+.bg-color-red {
+    background-color: #067fdb;
+}
+
+.bg-color-brown {
+    background-color: #B94A00;
+}
+
+.text-box p {
+    margin: 0;
+}
+
+.main-text {
+    font-size: 25px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.logout-button {
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #dc3545;
+  color: white;
+  background-color: #dc3545;
+  transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: transparent;
+  color: #dc3545;
+}
+
+.logout-button:active {
+  background-color: #b02a37; /* warna lebih gelap saat diklik */
+  color: white;
+}
+
+
+

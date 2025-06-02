@@ -7,6 +7,7 @@ import PenyewaList from './components/penyewa/PenyewaList';
 import AddPenyewa from './components/penyewa/AddPenyewa';
 import EditPenyewa from './components/penyewa/EditPenyewa';
 import Dashboard from './components/Dashboard';
+import Navbar from './components/Navbar';
 import Login from "./components/Login";
 import Register from "./components/Register";
 import SewaList from "./components/daftar_sewa/SewaList";
@@ -26,7 +27,19 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         {/* Protected Routes */}
-        <Route path="/dashboard" element={token ? <Dashboard /> : <Navigate to="/login" replace />} />
+        <Route
+          path="/dashboard"
+          element={
+            token ? (
+              <>
+                <Navbar />
+                <Dashboard />
+              </>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
 
         {/* Kamar Routes */}
         <Route path="/kamar" element={token ? <KamarList /> : <Navigate to="/login" replace />} />

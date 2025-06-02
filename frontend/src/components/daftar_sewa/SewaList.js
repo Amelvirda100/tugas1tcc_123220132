@@ -6,22 +6,24 @@ const SewaList = () => {
   const [sewa, setSewa] = useState([]);
 
   useEffect(() => {
-    getSewa();
+    getAllSewa();
   }, []);
 
-  const getSewa = async () => {
-    try {
-      const response = await axios.get('http://localhost:5000/sewa');
-      setSewa(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+const getAllSewa = async () => {
+  try {
+    const response = await axios.get('http://localhost:5000/sewa');
+    console.log(response.data); // Tambahkan ini
+    setSewa(response.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-  const deleteSewa = async (id) => {
+
+  const deleteSewa = async (id_sewa) => {
     try {
-      await axios.delete(`http://localhost:5000/sewa/${id}`);
-      getSewa();
+      await axios.delete(`http://localhost:5000/sewa/${id_sewa}`);
+      getAllSewa();
     } catch (error) {
       console.log(error);
     }
@@ -30,33 +32,46 @@ const SewaList = () => {
   return (
     <div className="columns is-centered mt-5">
       <div className="column is-half">
-        <Link to={'/add-sewa'} className="button is-primary is-light" style={{ marginBottom: '20px' }}>Tambah Sewa</Link>
+        {/* Tombol Back ke Dashboard */}
+      <Link 
+        to="/dashboard" 
+        className="button is-success is-light is-small mb-4"
+        style={{ position: 'absolute', top: '20px', left: '20px' }}
+      >
+        Back
+      </Link>
+
+        <Link to={'/sewa/add'} className="button is-primary is-light" style={{ marginBottom: '20px' }}>Tambah Sewa</Link>
         <table className="table is-striped is-fullwidth">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>ID Penyewa</th>
-              <th>ID Kamar</th>
-              <th>Tanggal Masuk</th>
-              <th>Tanggal Keluar</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sewa.map((item, index) => (
-              <tr key={item.id}>
-                <td>{index + 1}</td>
-                <td>{item.id_penyewa}</td>
-                <td>{item.id_kamar}</td>
-                <td>{item.tgl_masuk}</td>
-                <td>{item.tgl_keluar}</td>
-                <td>
-                  <Link to={`/edit-sewa/${item.id}`} className="button is-small is-info is-light">Edit</Link>
-                  <button onClick={() => deleteSewa(item.id)} className="button is-small is-danger is-light">Hapus</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+<thead>
+  <tr>
+    <th>No</th>
+    <th>Nama Penyewa</th>
+    <th>Nomor Kamar</th>
+    <th>Tanggal Masuk</th>
+    <th>Tanggal Keluar</th>
+    <th>Status</th>
+    <th>Aksi</th>
+  </tr>
+      </thead>
+      <tbody>
+        {sewa.map((item, index) => (
+            console.log('item tanggal:', item.tgl_mulai, item.tgl_selesai, item.status_sewa),
+          <tr key={item.id_sewa}>
+            <td>{index + 1}</td>
+            <td>{item.nama}</td>
+            <td>{item.no_kamar}</td>
+            <td>{item.tgl_mulai}</td>
+            <td>{item.tgl_selesai}</td>
+            <td>{item.status_sewa}</td>
+            <td>
+              <Link to={`/sewa/edit/${item.id_sewa}`} className="button is-small is-info is-light">Edit</Link>
+              <button onClick={() => deleteSewa(item.id_sewa)} className="button is-small is-danger is-light">Hapus</button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+
         </table>
       </div>
     </div>

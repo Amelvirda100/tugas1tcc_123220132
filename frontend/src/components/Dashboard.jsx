@@ -1,36 +1,124 @@
-import { Link } from "react-router-dom";
-import "../styles/style.css"; // pastikan ada style tambahan atau pakai Tailwind
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
+import '../styles/bentuk.css'; 
+import { FaBed, FaUsers, FaClipboardList, FaBars } from "react-icons/fa";
 
 const Dashboard = () => {
+  const [totalKamar, setTotalKamar] = useState(0);
+  const [totalPenyewa, setTotalPenyewa] = useState(0);
+  const [totalSewaAktif, setTotalSewaAktif] = useState(0);
+  const [sidebarActive, setSidebarActive] = useState(true);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    getTotalData();
+  }, []);
+
+  const getTotalData = async () => {
+    try {
+      const kamarRes = await axios.get("http://localhost:5000/kamar");
+      const penyewaRes = await axios.get("http://localhost:5000/penyewa");
+      const sewaRes = await axios.get("http://localhost:5000/sewa");
+
+      setTotalKamar(kamarRes.data.length);
+      setTotalPenyewa(penyewaRes.data.length);
+      setTotalSewaAktif(sewaRes.data.filter(s => s.status_sewa === "Aktif").length);
+    } catch (error) {
+      console.error("Gagal memuat data dashboard:", error);
+    }
+  };
+
+  
+
+  const isActive = (path) =>
+    location.pathname === path ? "active-menu" : "";
+
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
-      <header className="flex justify-between items-center mb-10">
-        <h1 className="text-2xl font-bold">Babarsari Kos</h1>
-        <nav className="flex gap-6">
-          <Link to="/kamar" className="hover:text-yellow-400">🏠 Kamar List</Link>
-          <Link to="/sewa" className="hover:text-yellow-400">📄 Sewa List</Link>
-          <Link to="/penyewa" className="hover:text-yellow-400">👥 Penyewa List</Link>
-          <Link to="/" className="hover:text-red-400">🚪 Logout</Link>
-        </nav>
-      </header>
+    <>
+      {/* Sidebar toggle button */}
+      <button
+        id="sidebarToggleBtn"
+        className={`btn btn-dark ${sidebarActive ? "active" : ""}`}
+        style={{ marginTop: "70px" }}
+        onClick={() => setSidebarActive(!sidebarActive)}
+        aria-label="Toggle Sidebar"
+      >
+        <FaBars />
+      </button>
 
-      <h2 className="text-xl mb-4">Dashboard Admin Kos</h2>
+      
 
-      <div className="grid grid-cols-3 gap-6">
-        <div className="bg-gray-800 p-6 rounded-xl shadow text-center">
-          <p className="text-gray-400">Total Kamar</p>
-          <h3 className="text-3xl font-semibold">0</h3>
-        </div>
-        <div className="bg-gray-800 p-6 rounded-xl shadow text-center">
-          <p className="text-gray-400">Total Penyewa</p>
-          <h3 className="text-3xl font-semibold">0</h3>
-        </div>
-        <div className="bg-gray-800 p-6 rounded-xl shadow text-center">
-          <p className="text-gray-400">Sewa Aktif</p>
-          <h3 className="text-3xl font-semibold">0</h3>
-        </div>
+      {/* Sidebar */}
+      <aside className={`sidebar ${sidebarActive ? "active" : ""}`}>
+        <ul>
+          <li className={isActive("/dashboard")}>
+            <Link to="/dashboard" style={{ textDecoration: "none", color: "white" }}>
+              <FaClipboardList style={{ marginRight: "10px" }} />
+              Dashboard
+            </Link>
+          </li>
+          <li className={isActive("/kamar")}>
+            <Link to="/kamar" style={{ textDecoration: "none", color: "white" }}>
+              <FaBed style={{ marginRight: "10px" }} />
+              Data Kamar
+            </Link>
+          </li>
+          <li className={isActive("/sewa")}>
+            <Link to="/sewa" style={{ textDecoration: "none", color: "white" }}>
+              <FaClipboardList style={{ marginRight: "10px" }} />
+              Data Sewa
+            </Link>
+          </li>
+          <li className={isActive("/penyewa")}>
+            <Link to="/penyewa" style={{ textDecoration: "none", color: "white" }}>
+              <FaUsers style={{ marginRight: "10px" }} />
+              Data Penyewa
+            </Link>
+          </li>
+        </ul>
+      </aside>
+
+      {/* Main content */}
+      <div className={`container-fluid ${sidebarActive ? "active" : ""}`} style={{ paddingTop: "70px" }}>
+
+
+        
+
+        <main className="p-4">
+          <div className="noti-box bg-color-green panel-custom">
+            <div className="icon-box bg-color-blue">
+              <FaBed />
+            </div>
+            <div className="text-box">
+              <p className="main-text">{totalKamar}</p>
+              <p>Total Kamar</p>
+            </div>
+          </div>
+
+          <div className="noti-box bg-color-red panel-custom" style={{ marginTop: "20px" }}>
+            <div className="icon-box bg-color-red">
+              <FaUsers />
+            </div>
+            <div className="text-box">
+              <p className="main-text">{totalPenyewa}</p>
+              <p>Total Penyewa</p>
+            </div>
+          </div>
+
+          <div className="noti-box bg-color-brown panel-custom" style={{ marginTop: "20px" }}>
+            <div className="icon-box bg-color-brown">
+              <FaClipboardList />
+            </div>
+            <div className="text-box">
+              <p className="main-text">{totalSewaAktif}</p>
+              <p>Sewa Aktif</p>
+            </div>
+          </div>
+        </main>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -7,16 +7,12 @@ const EditDaftarSewa = () => {
   const navigate = useNavigate();
 
   const [daftarSewa, setDaftarSewa] = useState(null);
-  const [kamar, setKamar] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resSewa = await axios.get(`http://localhost:5000/daftar_sewa/${id}`);
+        const resSewa = await axios.get(`http://localhost:5000/sewa/${id}`);
         setDaftarSewa(resSewa.data);
-
-        const resKamar = await axios.get(`http://localhost:5000/kamar/${resSewa.data.kamar_id}`);
-        setKamar(resKamar.data);
       } catch (error) {
         console.error(error);
         alert('Gagal mengambil data');
@@ -25,31 +21,25 @@ const EditDaftarSewa = () => {
     fetchData();
   }, [id]);
 
-  const handleSelesaiSewa = async (e) => {
-    e.preventDefault();
-    try {
-      // 1. Update status_sewa di tabel daftar_sewa
-      await axios.put(`http://localhost:5000/daftar_sewa/${id}`, {
-        ...daftarSewa,
-        status_sewa: 'Selesai',
-        tgl_selesai: new Date().toISOString().split('T')[0],
-      });
-
-      // 2. Update status kamar jadi kosong
-      await axios.put(`http://localhost:5000/kamar/${kamar.id}`, {
-        ...kamar,
-        status: 'kosong',
-      });
-
-      alert('Sewa berhasil diakhiri.');
-      navigate('/daftar_sewa');
-    } catch (error) {
-      console.error(error);
-      alert('Gagal menyelesaikan sewa');
+  // Fungsi untuk update status sewa dan update status kamar jadi Kosong
+const updateStatusSewa = async (statusBaru) => {
+  try {
+    if (statusBaru === 'Selesai') {
+      await axios.put(`http://localhost:5000/sewa/${id}/selesai`);
+    } else if (statusBaru === 'Dibatalkan') {
+      await axios.put(`http://localhost:5000/sewa/${id}/batalkan`);
     }
-  };
 
-  if (!daftarSewa || !kamar) {
+    alert(`Sewa berhasil di${statusBaru === 'Selesai' ? 'akhiri' : 'batalkan'}.`);
+    navigate('/sewa');
+  } catch (error) {
+    console.error(error);
+    alert(`Gagal ${statusBaru === 'Selesai' ? 'menyelesaikan' : 'membatalkan'} sewa`);
+  }
+};
+
+
+  if (!daftarSewa) {
     return <div className="has-text-centered mt-6">⏳ Memuat data...</div>;
   }
 
@@ -57,24 +47,38 @@ const EditDaftarSewa = () => {
     <div className="columns is-centered mt-5">
       <div className="column is-half">
         <div className="box">
-          <h3 className="title is-4">Akhiri Sewa</h3>
+          <h3 className="title is-4">Kelola Sewa</h3>
 
           <div className="content">
-            <p><strong>Nama Penyewa:</strong> {daftarSewa.penyewa_nama}</p>
-            <p><strong>Nomor Kamar:</strong> {kamar.nomor_kamar}</p>
+            <p><strong>Nama Penyewa:</strong> {daftarSewa.nama}</p>
+            <p><strong>Nomor Kamar:</strong> {daftarSewa.no_kamar}</p>
             <p><strong>Status Sewa Saat Ini:</strong> {daftarSewa.status_sewa}</p>
             <p><strong>Tanggal Mulai:</strong> {daftarSewa.tgl_mulai}</p>
+            {daftarSewa.tgl_selesai && <p><strong>Tanggal Selesai:</strong> {daftarSewa.tgl_selesai}</p>}
           </div>
 
           {daftarSewa.status_sewa === 'Aktif' ? (
-            <form onSubmit={handleSelesaiSewa}>
-              <button type="submit" className="button is-danger is-light">
+            <div className="buttons">
+              <button
+                onClick={() => updateStatusSewa('Selesai')}
+                className="button is-danger is-light"
+              >
                 ❌ Akhiri Sewa
               </button>
-            </form>
-          ) : (
+              <button
+                onClick={() => updateStatusSewa('Dibatalkan')}
+                className="button is-warning is-light"
+              >
+                🚫 Batalkan Sewa
+              </button>
+            </div>
+          ) : daftarSewa.status_sewa === 'Selesai' ? (
             <div className="notification is-success is-light">
               Sewa sudah selesai.
+            </div>
+          ) : (
+            <div className="notification is-danger is-light">
+              Sewa telah dibatalkan.
             </div>
           )}
         </div>

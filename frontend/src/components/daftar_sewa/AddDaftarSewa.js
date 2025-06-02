@@ -7,49 +7,57 @@ const AddDaftarSewa = () => {
   const [kamarList, setKamarList] = useState([]);
   const [id_penyewa, setIdPenyewa] = useState('');
   const [kamar_id, setKamarId] = useState('');
+  const [tgl_mulai, setTglMulai] = useState('');
+  const [tgl_selesai, setTglSelesai] = useState('');
+  const [status_sewa, setStatusSewa] = useState('Aktif');
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const resPenyewa = await axios.get('http://localhost:5000/penyewa');
-        setPenyewaList(resPenyewa.data);
+  const fetchData = async () => {
+    try {
+      const resPenyewa = await axios.get('http://localhost:5000/penyewa');
+      setPenyewaList(resPenyewa.data);
 
-        const resKamar = await axios.get('http://localhost:5000/kamar');
-        setKamarList(resKamar.data.filter(kamar => kamar.status === 'kosong'));
-      } catch (error) {
-        console.error(error);
-        alert('Gagal mengambil data penyewa atau kamar');
-      }
-    };
-    fetchData();
-  }, []);
+      const resKamar = await axios.get('http://localhost:5000/kamar');
+      console.log('Data kamar dari backend:', resKamar.data);
+      setKamarList(resKamar.data.filter(kamar => kamar.status.toLowerCase() === 'kosong'));
+    } catch (error) {
+      console.error(error);
+      alert('Gagal mengambil data penyewa atau kamar');
+    }
+  };
+  fetchData();
+}, []);
+
 
   const saveDaftarSewa = async (e) => {
     e.preventDefault();
+
+    if (!id_penyewa || !kamar_id || !tgl_mulai) {
+      alert('Pilih penyewa, kamar, dan isi tanggal mulai sewa');
+      return;
+    }
+
     try {
-      // Cek status kamar
+      // Cek status kamar sebelum buat sewa
       const resKamar = await axios.get(`http://localhost:5000/kamar/${kamar_id}`);
-      if (resKamar.data.status !== 'kosong') {
+      if (resKamar.data.status.toLowerCase() !== 'kosong') {
         alert('Kamar tidak tersedia');
         return;
       }
 
-      // Tambah daftar sewa
-      await axios.post('http://localhost:5000/daftar_sewa', {
+      // Buat entri daftar_sewa
+      await axios.post('http://localhost:5000/sewa', {
         id_penyewa,
         kamar_id,
-        tgl_mulai: new Date().toISOString().split('T')[0],
-        status_sewa: 'Aktif'
+        tgl_mulai,
+        tgl_selesai: tgl_selesai,
+        status_sewa
       });
 
-      // Update status kamar
-      await axios.put(`http://localhost:5000/kamar/${kamar_id}`, {
-        ...resKamar.data,
-        status: 'terisi'
-      });
-
-      navigate('/daftar_sewa');
+      alert('Data sewa berhasil disimpan');
+      navigate('/sewa/add');
     } catch (error) {
       console.error(error);
       alert('Gagal menyimpan data sewa');
@@ -65,10 +73,16 @@ const AddDaftarSewa = () => {
           <div className="field">
             <label className="label">Pilih Penyewa</label>
             <div className="select is-fullwidth">
-              <select value={id_penyewa} onChange={(e) => setIdPenyewa(e.target.value)} required>
+              <select
+                value={id_penyewa}
+                onChange={(e) => setIdPenyewa(e.target.value)}
+                required
+              >
                 <option value="">-- Pilih Penyewa --</option>
                 {penyewaList.map((p) => (
-                  <option key={p.id} value={p.id}>{p.nama}</option>
+                  <option key={p.id_penyewa} value={p.id_penyewa}>
+                    {p.nama}
+                  </option>
                 ))}
               </select>
             </div>
@@ -77,16 +91,61 @@ const AddDaftarSewa = () => {
           <div className="field">
             <label className="label">Pilih Kamar</label>
             <div className="select is-fullwidth">
-              <select value={kamar_id} onChange={(e) => setKamarId(e.target.value)} required>
-                <option value="">-- Pilih Kamar --</option>
+              <select
+                value={kamar_id}
+                onChange={(e) => setKamarId(e.target.value)}
+                required
+              >
+                <option value="">-- Pilih Kamar (Nomor) --</option>
                 {kamarList.map((k) => (
-                  <option key={k.id} value={k.id}>{k.nomor_kamar} - {k.tipe_kamar}</option>
+                  <option key={k.kamar_id} value={k.kamar_id}>
+                    {k.no_kamar}
+                  </option>
                 ))}
               </select>
             </div>
           </div>
 
-          <button type="submit" className="button is-primary is-light mt-4">💾 Simpan</button>
+
+          <div className="field">
+            <label className="label">Tanggal Mulai Sewa</label>
+            <input
+              type="date"
+              className="input"
+              value={tgl_mulai}
+              onChange={(e) => setTglMulai(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="field">
+            <label className="label">Tanggal Selesai Sewa (Opsional)</label>
+            <input
+              type="date"
+              className="input"
+              value={tgl_selesai}
+              onChange={(e) => setTglSelesai(e.target.value)}
+            />
+          </div>
+
+          <div className="field">
+            <label className="label">Status Sewa</label>
+            <div className="select is-fullwidth">
+              <select
+                value={status_sewa}
+                onChange={(e) => setStatusSewa(e.target.value)}
+                required
+              >
+                <option value="Aktif">Aktif</option>
+                <option value="Selesai">Selesai</option>
+                <option value="Dibatalkan">Dibatalkan</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" className="button is-primary is-light mt-4">
+            💾 Simpan
+          </button>
         </form>
       </div>
     </div>
